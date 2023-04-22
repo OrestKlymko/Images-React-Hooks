@@ -1,38 +1,38 @@
-import { Component } from 'react';
-import css from './css/modal.module.css'
-export class Modal extends Component {
-  componentDidMount() {
-    window.addEventListener('keydown',this.onClickEsc)
-    window.addEventListener('click',this.onClickModal)
-  }
-  componentWillUnmount() {
-    window.removeEventListener('keydown',this.onClickEsc)
-    window.removeEventListener('click',this.onClickModal)  }
+import { useEffect } from 'react';
+import css from './css/modal.module.css';
 
-  onClickEsc = (e)=> {
-    if (e.key === 'Escape') {
-      this.props.modal({ showModal: false })
-    }
-  }
-  onClickModal = (e)=>{
-    const modal = document.querySelector('#modal');
-      if(e.target===modal){
-        modal.style.display='none'
-        this.props.modal({showModal:false })
+export function Modal(props) {
+  useEffect(() => {
+    const onClickEsc = e => {
+      if (e.key === 'Escape') {
+        props.modal({ showModal: false });
       }
-    }
+    };
 
+    const onClickModal = e => {
+      const modal = document.querySelector('#modal');
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        props.modal({ showModal: false });
+      }
+    };
 
+    window.addEventListener('keydown', onClickEsc);
+    window.addEventListener('click', onClickModal);
 
+    return () => {
+      window.removeEventListener('keydown', onClickEsc);
+      window.removeEventListener('click', onClickModal);
+    };
+  }, [props]);
 
-  render() {
-const {getLargeImg} = this.props
+  const { getLargeImg } = props;
 
-
- return <div className={css.overlay} id="modal">
-   <div className={css.modal}>
-     <img src={getLargeImg} alt="" />
-   </div>
- </div>
-
-}}
+  return (
+    <div className={css.overlay} id="modal">
+      <div className={css.modal}>
+        <img src={getLargeImg} alt="" />
+      </div>
+    </div>
+  );
+}

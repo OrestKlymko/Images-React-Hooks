@@ -1,37 +1,34 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import css from './css/searchbar.module.css';
 
-export class Searchbar extends Component {
-  state = {
-    searchName: '',
-  };
-  onSubmitChange = e => {
+export function Searchbar(props) {
+  const [searchName, setSearchName] = useState('');
+
+  const onSubmitChange = e => {
     e.preventDefault();
-    this.props.onSearch(this.state.searchName);
+    props.onSearch(searchName);
   };
 
-  onInputChange = e => {
-    this.setState({ [e.currentTarget.name]: e.currentTarget.value });
+  const onInputChange = e => {
+    setSearchName(e.target.value);
   };
-  render() {
-    return (
-      <header className={css.searchbar}>
-        <form onSubmit={this.onSubmitChange}>
-          <button type="submit" className={css.sbmButton}>
-            <span>Search</span>
-          </button>
+  return (
+    <header className={css.searchbar}>
+      <form onSubmit={onSubmitChange}>
+        <button type="submit" className={css.sbmButton}>
+          <span>Search</span>
+        </button>
 
-          <input
-            name="searchName"
-            className={css.input}
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            onChange={this.onInputChange}
-          />
-        </form>
-      </header>
-    );
-  }
+        <input
+          name="searchName"
+          className={css.input}
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          onChange={onInputChange}
+        />
+      </form>
+    </header>
+  );
 }
