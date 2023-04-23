@@ -47,11 +47,13 @@ export function ImageGallery(props) {
       .then(r => r.json())
       .then(({ hits }) => {
         if (hits.length >= itemsPerPage) {
+
           setCollection([...collection, ...hits]);
-          setLoadMore(true);
+          setLoadMore(hits.length >= itemsPerPage);
         } else {
           setCollection([...collection, ...hits]);
-          setLoadMore(true);
+
+          setLoadMore(hits.length >= itemsPerPage);
         }
       })
       .finally(() => {
