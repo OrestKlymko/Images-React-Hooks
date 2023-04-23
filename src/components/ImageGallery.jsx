@@ -29,7 +29,9 @@ export function ImageGallery(props) {
       .then(({ totalHits, hits }) => {
         if (totalHits > 0) {
           setCollection(hits);
-          hits.length < totalHits ? setLoadMore(true) : setLoadMore(false);
+          collection.length + itemsPerPage < totalHits
+            ? setLoadMore(true)
+            : setLoadMore(false);
         } else alert('I can not find image');
       })
       .finally(() => {
@@ -46,7 +48,9 @@ export function ImageGallery(props) {
     fetch(URL)
       .then(r => r.json())
       .then(({ hits, totalHits }) => {
-        hits.length < totalHits ? setLoadMore(true) : setLoadMore(false);
+        collection.length + itemsPerPage < totalHits
+          ? setLoadMore(true)
+          : setLoadMore(false);
         setCollection([...collection, ...hits]);
       })
       .finally(() => {
