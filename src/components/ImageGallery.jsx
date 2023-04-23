@@ -37,6 +37,7 @@ export function ImageGallery(props) {
       .finally(() => {
         setLoader(false);
       });
+        // eslint-disable-next-line
   }, [props]);
 
   const onLoadMore = page => {
