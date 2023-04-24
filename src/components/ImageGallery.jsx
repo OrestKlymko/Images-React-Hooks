@@ -59,6 +59,7 @@ export function ImageGallery(props) {
       .finally(() => {
         setLoader(false);
       });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const onLoadMore = page => {
