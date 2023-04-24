@@ -21,6 +21,7 @@ export function ImageGallery(props) {
     setPage(1);
     setLoader(true);
     setLoadMore(false);
+    setCollection([]);
 
     const URL = `https://pixabay.com/api/?q=${searchQuery}&page=1&key=34338189-e9bdbbc7a13128854f573f779&image_type=photo&orientation=horizontal&per_page=${itemsPerPage}`;
 
@@ -37,11 +38,10 @@ export function ImageGallery(props) {
       .finally(() => {
         setLoader(false);
       });
-        // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [props]);
 
-  const onLoadMore = page => {
-    setPage(page);
+  useEffect(() => {
     const { searchQuery } = props;
 
     const URL = `https://pixabay.com/api/?q=${searchQuery}&page=${page}&key=34338189-e9bdbbc7a13128854f573f779&image_type=photo&orientation=horizontal&per_page=${itemsPerPage}`;
@@ -49,6 +49,8 @@ export function ImageGallery(props) {
     fetch(URL)
       .then(r => r.json())
       .then(({ hits, totalHits }) => {
+        console.log(hits);
+        console.log(totalHits);
         collection.length + itemsPerPage < totalHits
           ? setLoadMore(true)
           : setLoadMore(false);
@@ -57,6 +59,10 @@ export function ImageGallery(props) {
       .finally(() => {
         setLoader(false);
       });
+  }, [page]);
+
+  const onLoadMore = page => {
+    setPage(page);
   };
 
   const getLargeImg = largeImageURL => {
