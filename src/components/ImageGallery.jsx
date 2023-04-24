@@ -49,8 +49,6 @@ export function ImageGallery(props) {
     fetch(URL)
       .then(r => r.json())
       .then(({ hits, totalHits }) => {
-        console.log(hits);
-        console.log(totalHits);
         collection.length + itemsPerPage < totalHits
           ? setLoadMore(true)
           : setLoadMore(false);
